@@ -1,38 +1,145 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Gerenciador de Criptomoedas</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard - Gerenciador de Criptomoedas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Gerenciador de Criptomoedas</h1>
+  <div class="app-container">
+    <!-- Sidebar / Menu -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-coins"></i> CriptoManager</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+          <li><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
+          <li><a href="#"><i class="fas fa-wallet"></i> Carteira</a></li>
+          <li><a href="#"><i class="fas fa-exchange-alt"></i> Transações</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>&copy; 2024 CriptoManager</p>
+      </div>
+    </aside>
 
-    <form id="form-criptomoeda">
-      <input type="hidden" id="id">
-      <label>Nome</label>
-      <input id="nome" required>
-      <label>Sigla</label>
-      <input id="sigla" required maxlength="10">
-      <label>Valor (US$)</label>
-      <input id="valor" type="number" step="0.0001" required>
-      <button type="submit">Salvar</button>
-      <button id="limpar" type="button">Limpar</button>
-    </form>
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-search">
+          <input type="text" placeholder="Pesquisar...">
+          <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="header-user">
+          <span class="user-notification"><i class="fas fa-bell"></i></span>
+          <span class="user-profile"><i class="fas fa-user-circle"></i> Usuário</span>
+        </div>
+      </header>
 
-    <hr>
-
-    <input id="buscar" placeholder="Pesquisar por nome ou sigla">
-    <button id="btn-buscar">Pesquisar</button>
-
-    <table id="tabela">
-      <thead>
-        <tr><th>ID</th><th>Nome</th><th>Sigla</th><th>Valor</th><th>Ações</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <div class="dashboard-content">
+        <h1>Dashboard</h1>
+        
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-wallet"></i></div>
+            <div class="card-content">
+              <h3>Valor Total</h3>
+              <p class="card-value">$25,430.65</p>
+              <p class="card-change positive">+5.3% <i class="fas fa-arrow-up"></i></p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-coins"></i></div>
+            <div class="card-content">
+              <h3>Criptomoedas</h3>
+              <p class="card-value">12</p>
+              <p class="card-change">Ativos diferentes</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="card-content">
+              <h3>Transações</h3>
+              <p class="card-value">156</p>
+              <p class="card-change">Últimos 30 dias</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="card-content">
+              <h3>Desempenho</h3>
+              <p class="card-value">+12.7%</p>
+              <p class="card-change positive">Desde o início</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="dashboard-charts">
+          <div class="chart-container">
+            <h3>Desempenho do Portfólio</h3>
+            <div class="chart-placeholder">
+              <i class="fas fa-chart-line"></i>
+              <p>Gráfico de desempenho será exibido aqui</p>
+            </div>
+          </div>
+          
+          <div class="chart-container">
+            <h3>Distribuição de Ativos</h3>
+            <div class="chart-placeholder">
+              <i class="fas fa-chart-pie"></i>
+              <p>Gráfico de distribuição será exibido aqui</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="recent-transactions">
+          <h3>Transações Recentes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Criptomoeda</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="fab fa-bitcoin"></i> Bitcoin</td>
+                <td class="transaction-buy">Compra</td>
+                <td>0.05 BTC</td>
+                <td>$2,150.75</td>
+                <td>Hoje, 14:30</td>
+              </tr>
+              <tr>
+                <td><i class="fab fa-ethereum"></i> Ethereum</td>
+                <td class="transaction-sell">Venda</td>
+                <td>1.2 ETH</td>
+                <td>$3,540.20</td>
+                <td>Ontem, 09:15</td>
+              </tr>
+              <tr>
+                <td><i class="fas fa-coins"></i> Cardano</td>
+                <td class="transaction-buy">Compra</td>
+                <td>150 ADA</td>
+                <td>$187.50</td>
+                <td>22/06/2024</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="#" class="view-all">Ver todas as transações <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </main>
   </div>
 
   <script src="app.js"></script>

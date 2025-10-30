@@ -1,0 +1,52 @@
+package br.com.exemplo.criptomoedas.modelo;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "configuracao")
+public class Configuracao {
+    
+    @Id
+    private Long id;
+    
+    private String idChatTelegram;
+    private String tokenChatTelegram;
+    private String senhaAdministrador;
+    
+    public Configuracao() {
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getIdChatTelegram() {
+        return idChatTelegram;
+    }
+    
+    public void setIdChatTelegram(String idChatTelegram) {
+        this.idChatTelegram = idChatTelegram;
+    }
+    
+    public String getTokenChatTelegram() {
+        return tokenChatTelegram;
+    }
+    
+    public void setTokenChatTelegram(String tokenChatTelegram) {
+        this.tokenChatTelegram = tokenChatTelegram;
+    }
+    
+    public String getSenhaAdministrador() {
+        return senhaAdministrador;
+    }
+    
+    public void setSenhaAdministrador(String senhaAdministrador) {
+        this.senhaAdministrador = senhaAdministrador;
+    }
+}

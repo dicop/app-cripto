@@ -1,0 +1,4 @@
+br\com\exemplo\criptomoedas\modelo\Rede.class
+br\com\exemplo\criptomoedas\servico\ServicoRede.class
+br\com\exemplo\criptomoedas\repositorio\RepositorioRede.class
+br\com\exemplo\criptomoedas\api\RedeResource.class

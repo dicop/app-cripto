@@ -1,63 +1,77 @@
-document.addEventListener('DOMContentLoaded', function() {
-    carregarConfiguracao();
-    
-    const formConfiguracao = document.getElementById('formConfiguracao');
-    formConfiguracao.addEventListener('submit', function(event) {
-        event.preventDefault();
-        salvarConfiguracao();
-    });
+// API endpoint
+const api = "/api/configuracao";
+
+// Elementos DOM
+const formConfiguracao = document.getElementById('form-configuracao');
+const mensagem = document.getElementById('mensagem');
+
+// Carregar configurações ao iniciar a página
+document.addEventListener('DOMContentLoaded', () => {
+  carregarConfiguracao();
 });
 
-function carregarConfiguracao() {
-    fetch('/api/configuracao')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('idChatTelegram').value = data.idChatTelegram || '';
-            document.getElementById('tokenChatTelegram').value = data.tokenChatTelegram || '';
-            document.getElementById('senhaAdministrador').value = data.senhaAdministrador || '';
-        })
-        .catch(error => {
-            exibirMensagem('Erro ao carregar configuração: ' + error.message, 'erro');
-        });
+// Função para carregar configuração existente
+async function carregarConfiguracao() {
+  try {
+    const response = await fetch(api);
+    if (response.ok) {
+      const data = await response.json();
+      // Preencher o formulário com os dados existentes
+      document.getElementById('idChatTelegram').value = data.idChatTelegram || '';
+      document.getElementById('tokenChatTelegram').value = data.tokenChatTelegram || '';
+      // Não preencher a senha por segurança
+      document.getElementById('senhaAdministrador').value = '';
+    } else {
+      console.log('Nenhuma configuração encontrada, formulário em branco');
+    }
+  } catch (error) {
+    console.error('Erro ao carregar configuração:', error);
+    mostrarMensagem('Erro ao carregar configuração: ' + error.message, 'erro');
+  }
 }
 
-function salvarConfiguracao() {
-    const configuracao = {
-        id: 1, // Sempre será o ID 1, pois só existe um registro
-        idChatTelegram: document.getElementById('idChatTelegram').value,
-        tokenChatTelegram: document.getElementById('tokenChatTelegram').value,
-        senhaAdministrador: document.getElementById('senhaAdministrador').value
-    };
-    
-    fetch('/api/configuracao', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(configuracao)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Falha ao salvar configuração');
-        }
-        return response.json();
-    })
-    .then(data => {
-        exibirMensagem('Configuração salva com sucesso!', 'sucesso');
-    })
-    .catch(error => {
-        exibirMensagem('Erro ao salvar configuração: ' + error.message, 'erro');
+// Função para mostrar mensagens
+function mostrarMensagem(texto, tipo) {
+  mensagem.textContent = texto;
+  mensagem.className = `mensagem ${tipo}`;
+  mensagem.style.display = 'block';
+  
+  // Ocultar mensagem após 5 segundos
+  setTimeout(() => {
+    mensagem.style.display = 'none';
+  }, 5000);
+}
+
+// Salvar configuração
+formConfiguracao.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const configuracao = {
+    id: 1, // Sempre será o ID 1, pois só existe um registro
+    idChatTelegram: document.getElementById('idChatTelegram').value,
+    tokenChatTelegram: document.getElementById('tokenChatTelegram').value,
+    senhaAdministrador: document.getElementById('senhaAdministrador').value
+  };
+  
+  try {
+    const response = await fetch(api, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(configuracao)
     });
-}
-
-function exibirMensagem(texto, tipo) {
-    const mensagemDiv = document.getElementById('mensagem');
-    mensagemDiv.textContent = texto;
-    mensagemDiv.className = 'mensagem ' + tipo;
     
-    // Limpar a mensagem após 5 segundos
-    setTimeout(() => {
-        mensagemDiv.textContent = '';
-        mensagemDiv.className = 'mensagem';
-    }, 5000);
-}
+    if (response.ok) {
+      const data = await response.json();
+      mostrarMensagem('Configuração salva com sucesso!', 'sucesso');
+      // Limpar apenas o campo de senha por segurança
+      document.getElementById('senhaAdministrador').value = '';
+    } else {
+      mostrarMensagem('Erro ao salvar configuração', 'erro');
+    }
+  } catch (error) {
+    console.error('Erro ao salvar configuração:', error);
+    mostrarMensagem('Erro ao salvar configuração: ' + error.message, 'erro');
+  }
+});

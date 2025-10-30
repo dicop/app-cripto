@@ -44,30 +44,30 @@
 
       <div class="config-content">
         <div class="config-header">
-          <h1>Configurações do Sistema</h1>
+          <h1>Configurações</h1>
         </div>
         
         <div class="config-form-container">
-          <div id="mensagem" class="mensagem"></div>
-          
-          <form id="formConfiguracao" class="form-padrao">
+          <form id="form-configuracao" class="form-padrao">
+            <div id="mensagem" class="mensagem"></div>
+            
             <div class="form-group">
-              <label for="idChatTelegram">ID Chat Telegram:</label>
-              <input type="text" id="idChatTelegram" name="idChatTelegram" required>
+              <label for="idChatTelegram">ID Chat Telegram</label>
+              <input id="idChatTelegram" name="idChatTelegram" type="text" placeholder="Digite o ID do chat do Telegram" required>
             </div>
             
             <div class="form-group">
-              <label for="tokenChatTelegram">Token Chat Telegram:</label>
-              <input type="text" id="tokenChatTelegram" name="tokenChatTelegram" required>
+              <label for="tokenChatTelegram">Token Chat Telegram</label>
+              <input id="tokenChatTelegram" name="tokenChatTelegram" type="text" placeholder="Digite o token do bot do Telegram" required>
             </div>
             
             <div class="form-group">
-              <label for="senhaAdministrador">Senha Administrador:</label>
-              <input type="password" id="senhaAdministrador" name="senhaAdministrador" required>
+              <label for="senhaAdministrador">Senha Administrador</label>
+              <input id="senhaAdministrador" name="senhaAdministrador" type="password" placeholder="Digite a senha do administrador" required>
             </div>
             
-            <div class="form-actions">
-              <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salvar Alterações</button>
+            <div class="form-group">
+              <button type="submit" class="btn-save">Salvar</button>
             </div>
           </form>
         </div>
@@ -75,7 +75,7 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="configuracao.js"></script>
 </body>
 </html>

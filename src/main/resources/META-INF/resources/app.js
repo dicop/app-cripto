@@ -70,7 +70,14 @@ function carregarTransacoesRecentes() {
 document.querySelector('.header-search button').addEventListener('click', () => {
   const termo = document.querySelector('.header-search input').value.trim();
   if (termo) {
-    alert(`Pesquisando por: ${termo}`);
+    Swal.fire({
+      icon: 'info',
+      title: 'Pesquisa',
+      text: `Pesquisando por: ${termo}`,
+      confirmButtonColor: '#3085d6',
+      timer: 2000,
+      timerProgressBar: true
+    });
     // Implementar lógica de pesquisa real
   }
 });

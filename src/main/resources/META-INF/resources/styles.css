@@ -398,6 +398,12 @@ ul {
 .crypto-actions {
   display: flex;
   gap: 10px;
+  height: 100%;
+  align-items: center;
+}
+
+.crypto-table td {
+  vertical-align: middle;
 }
 
 .btn-edit, .btn-delete {

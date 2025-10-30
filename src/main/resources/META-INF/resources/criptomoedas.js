@@ -43,7 +43,7 @@ function montarTabelaCriptomoedas(items) {
       <td>${item.id || ''}</td>
       <td>${item.nome || ''}</td>
       <td>${item.sigla || ''}</td>
-      <td>$${item.valor ? item.valor.toFixed(4) : ''}</td>
+      <td>$${item.valor ? item.valor.toLocaleString('pt-BR', {minimumFractionDigits: 4, maximumFractionDigits: 4}) : ''}</td>
       <td class="crypto-actions">
         <button class="btn-edit" onclick="editarCriptomoeda(${item.id})"><i class="fas fa-edit"></i></button>
         <button class="btn-delete" onclick="excluirCriptomoeda(${item.id})"><i class="fas fa-trash"></i></button>
@@ -79,7 +79,12 @@ window.editarCriptomoeda = async function(id) {
   try {
     const response = await fetch(`${api}/${id}`);
     if (!response.ok) {
-      alert('Erro ao buscar criptomoeda');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Erro ao buscar criptomoeda',
+        confirmButtonColor: '#3085d6'
+      });
       return;
     }
     
@@ -98,15 +103,36 @@ window.editarCriptomoeda = async function(id) {
 
 // Excluir criptomoeda
 window.excluirCriptomoeda = async function(id) {
-  if (!confirm('Tem certeza que deseja excluir esta criptomoeda?')) return;
+  const result = await Swal.fire({
+    title: 'Confirmação',
+    text: 'Tem certeza que deseja excluir esta criptomoeda?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sim, excluir!',
+    cancelButtonText: 'Cancelar'
+  });
+  
+  if (!result.isConfirmed) return;
   
   try {
     const response = await fetch(`${api}/${id}`, { method: 'DELETE' });
     if (response.status === 204) {
-      alert('Criptomoeda excluída com sucesso!');
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Criptomoeda excluída com sucesso!',
+        confirmButtonColor: '#3085d6'
+      });
       listarCriptomoedas();
     } else {
-      alert('Erro ao excluir criptomoeda');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Erro ao excluir criptomoeda',
+        confirmButtonColor: '#3085d6'
+      });
     }
   } catch (error) {
     console.error('Erro ao excluir criptomoeda:', error);
@@ -143,11 +169,21 @@ formCriptomoeda.addEventListener('submit', async (e) => {
     });
     
     if (response.ok) {
-      alert(id ? 'Criptomoeda atualizada com sucesso!' : 'Criptomoeda criada com sucesso!');
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: id ? 'Criptomoeda atualizada com sucesso!' : 'Criptomoeda criada com sucesso!',
+        confirmButtonColor: '#3085d6'
+      });
       fecharModal();
       listarCriptomoedas();
     } else {
-      alert('Erro ao salvar criptomoeda');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Erro ao salvar criptomoeda',
+        confirmButtonColor: '#3085d6'
+      });
     }
   } catch (error) {
     console.error('Erro ao salvar criptomoeda:', error);

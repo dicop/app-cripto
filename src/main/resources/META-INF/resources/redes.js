@@ -12,7 +12,52 @@ const modalClose = document.querySelector('.modal-close');
 // Carregar redes ao iniciar a página
 document.addEventListener('DOMContentLoaded', () => {
   listarRedes();
+  inicializarMenuResponsivo();
 });
+
+// Função para inicializar o menu responsivo
+function inicializarMenuResponsivo() {
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  
+  if (menuToggle && sidebar && sidebarOverlay) {
+    // Toggle do menu
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      sidebarOverlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Fechar menu ao clicar no overlay
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    
+    // Fechar menu ao clicar em um link (para navegação mobile)
+    const sidebarLinks = sidebar.querySelectorAll('a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+          sidebarOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    // Fechar menu ao redimensionar para desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+}
 
 // Listar todas as redes
 async function listarRedes() {

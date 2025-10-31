@@ -1,4 +1,0 @@
-br\com\exemplo\criptomoedas\modelo\Criptomoeda.class
-br\com\exemplo\criptomoedas\repositorio\RepositorioCriptomoeda.class
-br\com\exemplo\criptomoedas\servico\ServicoCriptomoeda.class
-br\com\exemplo\criptomoedas\api\CriptomoedaResource.class

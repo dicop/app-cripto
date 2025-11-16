@@ -1,6 +1,7 @@
 // API endpoint
 const api = "/api/criptomoedas";
 const apiRedes = "/api/redes";
+const apiExchanges = "/api/exchanges";
 
 // Elementos DOM
 const tabelaCriptomoedas = document.getElementById('tabela-criptomoedas');
@@ -10,11 +11,13 @@ const btnAddCrypto = document.getElementById('btn-add-crypto');
 const btnCancel = document.getElementById('btn-cancel');
 const modalClose = document.querySelector('.modal-close');
 const selectRede = document.getElementById('rede');
+const selectExchange = document.getElementById('exchange');
 
 // Carregar criptomoedas ao iniciar a página
 document.addEventListener('DOMContentLoaded', () => {
   listarCriptomoedas();
   carregarRedes();
+  carregarExchanges();
   inicializarMenuResponsivo();
 });
 
@@ -125,6 +128,9 @@ function limparFormulario() {
   if (selectRede) {
     selectRede.value = '';
   }
+  if (selectExchange) {
+    selectExchange.value = '';
+  }
 }
 
 // Editar criptomoeda
@@ -149,6 +155,9 @@ window.editarCriptomoeda = async function(id) {
     document.getElementById('contrato').value = data.contrato || '';
     if (data.rede && data.rede.id) {
       selectRede.value = String(data.rede.id);
+    }
+    if (data.exchange && data.exchange.id && selectExchange) {
+      selectExchange.value = String(data.exchange.id);
     }
     
     document.querySelector('.modal-header h2').textContent = 'Editar Criptomoeda';
@@ -208,6 +217,10 @@ formCriptomoeda.addEventListener('submit', async (e) => {
     contrato: document.getElementById('contrato').value,
     rede: { id: parseInt(selectRede.value) }
   };
+  const exchangeId = selectExchange && selectExchange.value ? parseInt(selectExchange.value) : null;
+  if (exchangeId) {
+    payload.exchange = { id: exchangeId };
+  }
   
   try {
     let url = api;
@@ -264,5 +277,23 @@ async function carregarRedes() {
     });
   } catch (error) {
     console.error('Erro ao carregar redes:', error);
+  }
+}
+
+// Carregar exchanges para o select
+async function carregarExchanges() {
+  if (!selectExchange) return;
+  try {
+    const response = await fetch(apiExchanges);
+    const exchanges = await response.json();
+    selectExchange.innerHTML = '<option value="" selected>Selecione uma exchange...</option>';
+    exchanges.forEach(e => {
+      const opt = document.createElement('option');
+      opt.value = e.id;
+      opt.textContent = e.nome;
+      selectExchange.appendChild(opt);
+    });
+  } catch (error) {
+    console.error('Erro ao carregar exchanges:', error);
   }
 }

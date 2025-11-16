@@ -34,6 +34,7 @@ public class ServicoCriptomoeda {
             existente.setSigla(dados.getSigla());
             existente.setValor(dados.getValor());
             existente.setRede(dados.getRede());
+            existente.setExchange(dados.getExchange());
             existente.setContrato(dados.getContrato());
         }
     }

@@ -1,8 +1,9 @@
+<!-- c:\desenvolvimento\projetos\app-cripto\src\main\resources\META-INF\resources\exchanges.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Criptomoedas - Gerenciador de Criptomoedas</title>
+  <title>Exchanges - Gerenciador de Criptomoedas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,10 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
-    <!-- Sidebar / Menu -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2><i class="fas fa-coins"></i> CriptoManager</h2>
@@ -22,9 +20,9 @@
       <nav class="sidebar-nav">
         <ul>
           <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-          <li class="active"><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
+          <li><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
           <li><a href="redes.html"><i class="fas fa-network-wired"></i> Redes</a></li>
-          <li><a href="exchanges.html"><i class="fas fa-exchange-alt"></i> Exchanges</a></li>
+          <li class="active"><a href="exchanges.html"><i class="fas fa-exchange-alt"></i> Exchanges</a></li>
           <li><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
           <li><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
           <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
@@ -35,7 +33,6 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
       <header class="main-header">
         <button class="menu-toggle" id="menuToggle">
@@ -49,68 +46,57 @@
 
       <div class="crypto-content">
         <div class="crypto-header">
-          <h1>Criptomoedas</h1>
-          <button class="btn-add" id="btn-add-crypto"><i class="fas fa-plus"></i> Nova Criptomoeda</button>
+          <h1>Exchanges</h1>
+          <button class="btn-add" id="btn-add-exchange"><i class="fas fa-plus"></i> Nova Exchange</button>
         </div>
-        
+
         <div class="crypto-table">
-          <table id="tabela-criptomoedas">
+          <table id="tabela-exchanges">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Sigla</th>
-                <th>Valor (US$)</th>
-                <th>Rede</th>
-                <th>Contrato</th>
+                <th>URL</th>
+                <th>Token de Segurança</th>
+                <th>Taxa de negociação (%)</th>
                 <th>Ações</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- Dados serão carregados via JavaScript -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Modal para adicionar/editar criptomoeda -->
-  <div class="modal" id="modal-criptomoeda">
+  <div class="modal" id="modal-exchange">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Nova Criptomoeda</h2>
+        <h2>Nova Exchange</h2>
         <button class="modal-close">&times;</button>
       </div>
       <div class="modal-body">
-        <form id="form-criptomoeda">
+        <form id="form-exchange">
           <input type="hidden" id="id">
           <div class="form-group">
             <label for="nome">Nome</label>
             <input id="nome" required>
           </div>
           <div class="form-group">
-            <label for="sigla">Sigla</label>
-            <input id="sigla" required maxlength="10">
+            <label for="url">URL</label>
+            <input id="url" type="url" required placeholder="https://...">
           </div>
           <div class="form-group">
-            <label for="valor">Valor (US$)</label>
-            <input id="valor" type="number" step="0.0001" required>
+            <label for="tokenSeguranca">Token de Segurança</label>
+            <input id="tokenSeguranca" required>
           </div>
           <div class="form-group">
-            <label for="rede">Rede</label>
-            <select id="rede" required></select>
-          </div>
-          <div class="form-group">
-            <label for="exchange">Exchange</label>
-            <select id="exchange"></select>
-          </div>
-          <div class="form-group">
-            <label for="contrato">Contrato</label>
-            <input id="contrato" required maxlength="100" pattern="^[A-Za-z0-9]+$" title="Apenas caracteres alfanuméricos" placeholder="Ex.: 0x... (alfanumérico)">
+            <label for="taxaNegociacao">Taxa de negociação (%)</label>
+            <input id="taxaNegociacao" type="number" step="0.01" min="0" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-cancel" id="btn-cancel">Cancelar</button>
+            <button type="button" class="btn-cancel" id="btn-limpar">Limpar</button>
             <button type="submit" class="btn-save">Salvar</button>
           </div>
         </form>
@@ -118,6 +104,6 @@
     </div>
   </div>
 
-  <script src="criptomoedas.js"></script>
+  <script src="exchanges.js"></script>
 </body>
 </html>

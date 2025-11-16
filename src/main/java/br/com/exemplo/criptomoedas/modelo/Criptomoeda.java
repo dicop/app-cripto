@@ -27,6 +27,10 @@ public class Criptomoeda {
     @JoinColumn(name = "rede_id")
     private Rede rede;
 
+    @ManyToOne
+    @JoinColumn(name = "exchange_id")
+    private Exchange exchange;
+
     // Novo campo: contrato da criptomoeda na rede (alfanumérico)
     @NotBlank
     @Column(name = "contrato", length = 100)
@@ -70,6 +74,14 @@ public class Criptomoeda {
 
     public void setRede(Rede rede) {
         this.rede = rede;
+    }
+
+    public Exchange getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
     }
 
     public String getContrato() {

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Mensagens - Gerenciador de Criptomoedas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Overlay para mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- Sidebar / Menu -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-coins"></i> CriptoManager</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+          <li><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
+          <li><a href="redes.html"><i class="fas fa-network-wired"></i> Redes</a></li>
+          <li class="active"><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
+          <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>&copy; 2024 CriptoManager</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-search">
+          <input type="text" placeholder="Pesquisar...">
+          <button><i class="fas fa-search"></i></button>
+        </div>
+      </header>
+
+      <div class="messages-content">
+        <div class="messages-header">
+          <h1><i class="fas fa-paper-plane"></i> Enviar Mensagem via Telegram</h1>
+          <p class="subtitle">Envie mensagens diretamente para o seu chat do Telegram configurado</p>
+        </div>
+
+        <div class="message-form-container">
+          <form id="messageForm" class="message-form">
+            <div class="form-group">
+              <label for="messageText">
+                <i class="fas fa-comment-alt"></i> Mensagem
+              </label>
+              <textarea 
+                id="messageText" 
+                name="messageText" 
+                placeholder="Digite sua mensagem aqui..."
+                rows="8"
+                required
+              ></textarea>
+              <div class="char-counter">
+                <span id="charCount">0</span> / 4096 caracteres
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="clearBtn" class="btn btn-secondary">
+                <i class="fas fa-eraser"></i> Limpar
+              </button>
+              <button type="submit" id="sendBtn" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Enviar Mensagem
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="message-info">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="info-content">
+              <h3>Informações Importantes</h3>
+              <ul>
+                <li>Certifique-se de que as configurações do Telegram estão corretas</li>
+                <li>O token e ID do chat devem estar configurados na seção Configurações</li>
+                <li>Mensagens podem ter até 4096 caracteres</li>
+                <li>O envio é feito em tempo real via API do Telegram</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="mensagens.js"></script>
+</body>
+</html>

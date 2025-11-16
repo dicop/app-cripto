@@ -1,9 +1,15 @@
 package br.com.exemplo.criptomoedas.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 public class Criptomoeda {
@@ -14,6 +20,17 @@ public class Criptomoeda {
     private String nome;
     private String sigla;
     private Double valor;
+
+    // Nova relação: a criptomoeda pertence a uma Rede
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "rede_id")
+    private Rede rede;
+
+    // Novo campo: contrato da criptomoeda na rede (alfanumérico)
+    @NotBlank
+    @Column(name = "contrato", length = 100)
+    private String contrato;
 
     public Long getId() {
         return id;
@@ -45,5 +62,21 @@ public class Criptomoeda {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Rede getRede() {
+        return rede;
+    }
+
+    public void setRede(Rede rede) {
+        this.rede = rede;
+    }
+
+    public String getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(String contrato) {
+        this.contrato = contrato;
     }
 }

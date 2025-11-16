@@ -1,5 +1,6 @@
 // API endpoint
 const api = "/api/criptomoedas";
+const apiRedes = "/api/redes";
 
 // Elementos DOM
 const tabelaCriptomoedas = document.getElementById('tabela-criptomoedas');
@@ -8,10 +9,12 @@ const formCriptomoeda = document.getElementById('form-criptomoeda');
 const btnAddCrypto = document.getElementById('btn-add-crypto');
 const btnCancel = document.getElementById('btn-cancel');
 const modalClose = document.querySelector('.modal-close');
+const selectRede = document.getElementById('rede');
 
 // Carregar criptomoedas ao iniciar a página
 document.addEventListener('DOMContentLoaded', () => {
   listarCriptomoedas();
+  carregarRedes();
   inicializarMenuResponsivo();
 });
 
@@ -77,7 +80,7 @@ function montarTabelaCriptomoedas(items) {
   
   if (items.length === 0) {
     const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="5" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
+    tr.innerHTML = '<td colspan="7" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
     tbody.appendChild(tr);
     return;
   }
@@ -89,6 +92,8 @@ function montarTabelaCriptomoedas(items) {
       <td>${item.nome || ''}</td>
       <td>${item.sigla || ''}</td>
       <td>$${item.valor ? item.valor.toLocaleString('pt-BR', {minimumFractionDigits: 4, maximumFractionDigits: 4}) : ''}</td>
+      <td>${item.rede && item.rede.nome ? item.rede.nome : ''}</td>
+      <td>${item.contrato || ''}</td>
       <td class="crypto-actions">
         <button class="btn-edit" onclick="editarCriptomoeda(${item.id})"><i class="fas fa-edit"></i></button>
         <button class="btn-delete" onclick="excluirCriptomoeda(${item.id})"><i class="fas fa-trash"></i></button>
@@ -117,6 +122,9 @@ modalClose.addEventListener('click', fecharModal);
 function limparFormulario() {
   formCriptomoeda.reset();
   document.getElementById('id').value = '';
+  if (selectRede) {
+    selectRede.value = '';
+  }
 }
 
 // Editar criptomoeda
@@ -138,6 +146,10 @@ window.editarCriptomoeda = async function(id) {
     document.getElementById('nome').value = data.nome || '';
     document.getElementById('sigla').value = data.sigla || '';
     document.getElementById('valor').value = data.valor || '';
+    document.getElementById('contrato').value = data.contrato || '';
+    if (data.rede && data.rede.id) {
+      selectRede.value = String(data.rede.id);
+    }
     
     document.querySelector('.modal-header h2').textContent = 'Editar Criptomoeda';
     modalCriptomoeda.style.display = 'flex';
@@ -192,7 +204,9 @@ formCriptomoeda.addEventListener('submit', async (e) => {
   const payload = {
     nome: document.getElementById('nome').value,
     sigla: document.getElementById('sigla').value,
-    valor: parseFloat(document.getElementById('valor').value)
+    valor: parseFloat(document.getElementById('valor').value),
+    contrato: document.getElementById('contrato').value,
+    rede: { id: parseInt(selectRede.value) }
   };
   
   try {
@@ -234,3 +248,21 @@ formCriptomoeda.addEventListener('submit', async (e) => {
     console.error('Erro ao salvar criptomoeda:', error);
   }
 });
+
+// Carregar redes para o select
+async function carregarRedes() {
+  if (!selectRede) return;
+  try {
+    const response = await fetch(apiRedes);
+    const redes = await response.json();
+    selectRede.innerHTML = '<option value="" disabled selected>Selecione uma rede...</option>';
+    redes.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.id;
+      opt.textContent = r.nome;
+      selectRede.appendChild(opt);
+    });
+  } catch (error) {
+    console.error('Erro ao carregar redes:', error);
+  }
+}

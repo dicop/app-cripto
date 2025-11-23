@@ -98,6 +98,7 @@ async function listarCotacoes() {
           <button class="btn-delete" onclick="excluirCotacao(${item.id})" title="Excluir"><i class="fas fa-trash"></i></button>
           <button class="btn-bybit" onclick="atualizarPreco(${item.id})" title="Atualizar preço bybit"><i class="fas fa-sync-alt"></i></button>
           <button class="btn-binance" onclick="atualizarPrecoBinance(${item.id})" title="Atualizar preço binance"><i class="fas fa-sync-alt"></i></button>
+          <button class="btn-bitget" onclick="atualizarPrecoBitget(${item.id})" title="Atualizar preço bitget"><i class="fas fa-sync-alt"></i></button>
           <button class="btn-auto-update" onclick="atualizarPrecoAuto(${item.id})" title="Atualizar Preço"><i class="fas fa-sync"></i></button>
         </td>
       `;
@@ -291,6 +292,23 @@ async function atualizarTodos() {
     if (resp.ok) {
       await listarCotacoes();
       Swal.fire({ icon: 'success', title: 'Todas as cotações foram atualizadas!', timer: 2000, showConfirmButton: false });
+    } else {
+      const err = await resp.json();
+      Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });
+    }
+  } catch (e) {
+    console.error(e);
+    Swal.fire({ icon: 'error', title: 'Erro de conexão' });
+  }
+}
+
+async function atualizarPrecoBitget(id) {
+  try {
+    Swal.fire({ title: 'Atualizando Bitget...', didOpen: () => Swal.showLoading() });
+    const resp = await fetch(`${apiCotacoes}/${id}/atualizar-preco-bitget`, { method: 'POST' });
+    if (resp.ok) {
+      await listarCotacoes();
+      Swal.fire({ icon: 'success', title: 'Preço atualizado (Bitget)', timer: 1500, showConfirmButton: false });
     } else {
       const err = await resp.json();
       Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });

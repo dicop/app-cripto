@@ -488,6 +488,22 @@ ul {
   opacity: 0.9;
 }
 
+.btn-bitget {
+  background-color: #00a186;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn-bitget:hover {
+  background-color: #00866f;
+  opacity: 0.9;
+}
+
 
 /* Modal */
 .modal {

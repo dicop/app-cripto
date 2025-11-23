@@ -44,6 +44,10 @@ public class ServicoCotacao {
     @RestClient
     BinanceClient binanceClient;
 
+    @Inject
+    @RestClient
+    BitgetClient bitgetClient;
+
     @Transactional
     public Cotacao atualizarPreco(Long id) {
         Cotacao cotacao = cotacaoRepository.findById(id);
@@ -93,6 +97,31 @@ public class ServicoCotacao {
 
         // Calcular venda (usando bids)
         double precoVenda = calcularPrecoMedio(quantidadeDolar, response.bids);
+
+        cotacao.setPrecoCompra(precoCompra);
+        cotacao.setPrecoVenda(precoVenda);
+
+        return cotacao;
+    }
+
+    @Transactional
+    public Cotacao atualizarPrecoBitget(Long id) {
+        Cotacao cotacao = cotacaoRepository.findById(id);
+        if (cotacao == null) {
+            throw new IllegalArgumentException("Cotação não encontrada");
+        }
+
+        String symbol = cotacao.getNegociada().getSigla() + cotacao.getDolar().getSigla();
+        BitgetClient.BitgetResponse response = bitgetClient.getOrderbook(symbol, "step0", 50);
+
+        if (response == null || response.data == null || response.data.bids == null || response.data.asks == null) {
+            throw new RuntimeException("Erro ao consultar Bitget");
+        }
+
+        double quantidadeDolar = cotacao.getQuantidadeDolar();
+
+        double precoCompra = calcularPrecoMedio(quantidadeDolar, response.data.asks);
+        double precoVenda = calcularPrecoMedio(quantidadeDolar, response.data.bids);
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);

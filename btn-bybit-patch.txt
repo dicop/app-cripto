@@ -1,0 +1,17 @@
+/* Adicionar após a linha 473 (.btn-refresh:hover) */
+
+.btn-bybit {
+  background-color: #3a7bd5;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn-bybit:hover {
+  background-color: #0d47a1;
+  opacity: 0.9;
+}

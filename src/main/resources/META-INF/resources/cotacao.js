@@ -96,7 +96,7 @@ async function listarCotacoes() {
         <td class="crypto-actions">
           <button class="btn-edit" onclick="editarCotacao(${item.id})" title="Editar"><i class="fas fa-edit"></i></button>
           <button class="btn-delete" onclick="excluirCotacao(${item.id})" title="Excluir"><i class="fas fa-trash"></i></button>
-          <button class="btn-refresh" onclick="atualizarPreco(${item.id})" title="Atualizar preço bybit"><i class="fas fa-sync-alt"></i></button>
+          <button class="btn-bybit" onclick="atualizarPreco(${item.id})" title="Atualizar preço bybit"><i class="fas fa-sync-alt"></i></button>
           <button class="btn-binance" onclick="atualizarPrecoBinance(${item.id})" title="Atualizar preço binance"><i class="fas fa-sync-alt"></i></button>
           <button class="btn-auto-update" onclick="atualizarPrecoAuto(${item.id})" title="Atualizar Preço"><i class="fas fa-sync"></i></button>
         </td>

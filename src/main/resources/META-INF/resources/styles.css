@@ -138,7 +138,7 @@ ul {
 }
 
 .header-search {
-  display: inline-flex;
+  display: none !important;
   align-items: center;
   gap: 0;
   flex: 1;
@@ -638,7 +638,6 @@ ul {
   align-self: center;
   height: 42px;
   width: 42px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
 }

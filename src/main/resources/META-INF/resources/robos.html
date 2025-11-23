@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Robôs - Gerenciador de Criptomoedas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Overlay para mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- Sidebar / Menu -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-coins"></i> CriptoManager</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+          <li><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
+          <li><a href="redes.html"><i class="fas fa-network-wired"></i> Redes</a></li>
+          <li><a href="exchanges.html"><i class="fas fa-exchange-alt"></i> Exchanges</a></li>
+          <li><a href="cotacao.html"><i class="fas fa-tag"></i> Cotação de Preço</a></li>
+          <li><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
+          <li><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
+          <li class="active"><a href="robos.html"><i class="fas fa-robot"></i> Robôs</a></li>
+          <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>&copy; 2024 CriptoManager</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-title">
+          <h1>Gerenciamento de Robôs</h1>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="card">
+          <div class="card-content">
+            <h3>Serviços em Segundo Plano</h3>
+            <p>Gerencie a execução e frequência dos robôs do sistema.</p>
+            
+            <div class="table-responsive" style="margin-top: 20px;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nome do Robô</th>
+                    <th>Status</th>
+                    <th>Frequência (segundos)</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="robotsTableBody">
+                  <!-- Robots will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="robos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

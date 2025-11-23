@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <title>Dashboard - Gerenciador de Criptomoedas</title>
@@ -9,11 +10,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
   <div class="app-container">
     <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
+
     <!-- Sidebar / Menu -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
@@ -28,6 +30,7 @@
           <li><a href="cotacao.html"><i class="fas fa-tag"></i> Cotação de Preço</a></li>
           <li><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
           <li><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
+          <li><a href="robos.html"><i class="fas fa-robot"></i> Robôs</a></li>
           <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
         </ul>
       </nav>
@@ -50,7 +53,7 @@
 
       <div class="dashboard-content">
         <h1>Dashboard</h1>
-        
+
         <div class="dashboard-cards">
           <div class="card">
             <div class="card-icon"><i class="fas fa-wallet"></i></div>
@@ -60,7 +63,7 @@
               <p class="card-change positive">+5.3% <i class="fas fa-arrow-up"></i></p>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-icon"><i class="fas fa-coins"></i></div>
             <div class="card-content">
@@ -69,7 +72,7 @@
               <p class="card-change">Ativos diferentes</p>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-icon"><i class="fas fa-exchange-alt"></i></div>
             <div class="card-content">
@@ -78,7 +81,7 @@
               <p class="card-change">Últimos 30 dias</p>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-icon"><i class="fas fa-chart-line"></i></div>
             <div class="card-content">
@@ -88,7 +91,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="dashboard-charts">
           <div class="chart-container">
             <h3>Desempenho do Portfólio</h3>
@@ -97,7 +100,7 @@
               <p>Gráfico de desempenho será exibido aqui</p>
             </div>
           </div>
-          
+
           <div class="chart-container">
             <h3>Distribuição de Ativos</h3>
             <div class="chart-placeholder">
@@ -106,7 +109,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="recent-transactions">
           <h3>Transações Recentes</h3>
           <table>
@@ -151,4 +154,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

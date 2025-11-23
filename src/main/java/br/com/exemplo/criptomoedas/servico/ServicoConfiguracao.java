@@ -9,20 +9,19 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ServicoConfiguracao {
-    
+
     @Inject
     RepositorioConfiguracao repositorio;
-    
+
     public Configuracao obterConfiguracao() {
         return repositorio.obterConfiguracao();
     }
-    
+
     @Transactional
     public Configuracao salvarConfiguracao(Configuracao configuracao) {
         if (configuracao.getId() == null) {
             configuracao.setId(1L); // Garantindo que sempre terá apenas um registro
         }
-        repositorio.persist(configuracao);
-        return configuracao;
+        return repositorio.getEntityManager().merge(configuracao);
     }
 }

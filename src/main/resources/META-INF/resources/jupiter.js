@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
         resultCard.style.display = 'block';
 
         // Basic fields from Jupiter Quote Response
-        const inAmount = data.inAmount;
-        const outAmount = data.outAmount;
-        const priceImpact = data.priceImpactPct;
+        const inAmount = data.entrada;
+        const outAmount = data.saidaEstimada;
+        const priceImpact = data.impactoPreco;
 
         // Get symbol and decimals for output
         const outCrypto = cryptoMap[outputMintAddress];
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('resultInAmount').textContent = adjustedInAmount;
         document.getElementById('resultOutAmount').textContent = `${adjustedOutAmount} ${outSymbol}`;
-        document.getElementById('resultPriceImpact').textContent = priceImpact ? `${parseFloat(priceImpact).toFixed(4)}%` : 'N/A';
+        document.getElementById('resultPriceImpact').textContent = priceImpact || 'N/A';
 
         // Calculate simple price if possible
         if (adjustedInAmount && adjustedOutAmount) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <title>Configurações - Gerenciador de Criptomoedas</title>
@@ -9,11 +10,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
   <div class="app-container">
     <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
+
     <!-- Sidebar / Menu -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
@@ -52,26 +54,35 @@
         <div class="config-header">
           <h1>Configurações</h1>
         </div>
-        
+
         <div class="config-form-container">
           <form id="form-configuracao" class="form-padrao">
             <div id="mensagem" class="mensagem"></div>
-            
+
             <div class="form-group">
               <label for="idChatTelegram">ID Chat Telegram</label>
-              <input id="idChatTelegram" name="idChatTelegram" type="text" placeholder="Digite o ID do chat do Telegram" required>
+              <input id="idChatTelegram" name="idChatTelegram" type="text" placeholder="Digite o ID do chat do Telegram"
+                required>
             </div>
-            
+
             <div class="form-group">
               <label for="tokenChatTelegram">Token Chat Telegram</label>
-              <input id="tokenChatTelegram" name="tokenChatTelegram" type="text" placeholder="Digite o token do bot do Telegram" required>
+              <input id="tokenChatTelegram" name="tokenChatTelegram" type="text"
+                placeholder="Digite o token do bot do Telegram" required>
             </div>
-            
+
             <div class="form-group">
               <label for="senhaAdministrador">Senha Administrador</label>
-              <input id="senhaAdministrador" name="senhaAdministrador" type="password" placeholder="Digite a senha do administrador" required>
+              <input id="senhaAdministrador" name="senhaAdministrador" type="password"
+                placeholder="Digite a senha do administrador" required>
             </div>
-            
+
+            <div class="form-group">
+              <label for="frequenciaRobos">Frequência dos Robôs</label>
+              <input id="frequenciaRobos" name="frequenciaRobos" type="text"
+                placeholder="Digite a frequência dos robôs (ex: 0/5 * * * * ?)">
+            </div>
+
             <div class="form-group">
               <button type="submit" class="btn-save">Salvar</button>
             </div>
@@ -84,4 +95,5 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="configuracao.js"></script>
 </body>
+
 </html>

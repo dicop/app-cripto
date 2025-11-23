@@ -8,19 +8,19 @@ function loadRobots() {
         .then(data => {
             const tbody = document.getElementById('robotsTableBody');
             tbody.innerHTML = '';
-            
+
             for (const [name, info] of Object.entries(data)) {
                 const row = document.createElement('tr');
-                
+
                 const isRunning = info.status === 'RUNNING';
                 const statusClass = isRunning ? 'text-success' : 'text-danger';
                 const statusIcon = isRunning ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-stop-circle"></i>';
-                
+
                 row.innerHTML = `
                     <td>${name}</td>
                     <td class="${statusClass}">${statusIcon} ${info.status}</td>
                     <td>
-                        <div class="input-group" style="max-width: 150px;">
+                        <div class="input-group">
                             <input type="number" class="form-control" value="${info.frequency}" min="1" id="freq-${name}">
                             <button class="btn btn-sm btn-outline-primary" onclick="updateFrequency('${name}')">
                                 <i class="fas fa-save"></i>
@@ -28,10 +28,10 @@ function loadRobots() {
                         </div>
                     </td>
                     <td>
-                        ${isRunning ? 
-                            `<button class="btn btn-danger btn-sm" onclick="stopRobot('${name}')"><i class="fas fa-stop"></i> Parar</button>` : 
-                            `<button class="btn btn-success btn-sm" onclick="startRobot('${name}')"><i class="fas fa-play"></i> Iniciar</button>`
-                        }
+                        ${isRunning ?
+                        `<button class="btn btn-danger btn-sm" onclick="stopRobot('${name}')"><i class="fas fa-stop"></i> Parar</button>` :
+                        `<button class="btn btn-success btn-sm" onclick="startRobot('${name}')"><i class="fas fa-play"></i> Iniciar</button>`
+                    }
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -88,18 +88,18 @@ function updateFrequency(name) {
         },
         body: JSON.stringify({ frequency: parseInt(frequency) })
     })
-    .then(response => {
-        if (response.ok) {
-            loadRobots();
-            Swal.fire({
-                title: 'Atualizado!',
-                text: `Frequência do robô ${name} atualizada.`,
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false
-            });
-        } else {
-            Swal.fire('Erro', 'Falha ao atualizar frequência', 'error');
-        }
-    });
+        .then(response => {
+            if (response.ok) {
+                loadRobots();
+                Swal.fire({
+                    title: 'Atualizado!',
+                    text: `Frequência do robô ${name} atualizada.`,
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            } else {
+                Swal.fire('Erro', 'Falha ao atualizar frequência', 'error');
+            }
+        });
 }

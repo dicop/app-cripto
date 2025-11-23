@@ -504,6 +504,32 @@ ul {
   opacity: 0.9;
 }
 
+/* Unificar design dos botões de atualização ao estilo Bitget */
+.btn-bybit,
+.btn-binance,
+.btn-auto-update,
+.btn-refresh {
+  background-color: #00a186;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-bybit:hover,
+.btn-binance:hover,
+.btn-auto-update:hover,
+.btn-refresh:hover {
+  background-color: #00866f;
+  opacity: 0.9;
+}
+
 
 /* Modal */
 .modal {

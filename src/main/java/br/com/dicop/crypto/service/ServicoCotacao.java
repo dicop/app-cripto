@@ -72,6 +72,9 @@ public class ServicoCotacao {
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
 
         return cotacao;
     }
@@ -100,6 +103,9 @@ public class ServicoCotacao {
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
 
         return cotacao;
     }
@@ -125,6 +131,9 @@ public class ServicoCotacao {
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
 
         return cotacao;
     }
@@ -222,12 +231,14 @@ public class ServicoCotacao {
         List<Cotacao> cotacoes = cotacaoRepository.listAll();
         for (Cotacao cotacao : cotacoes) {
             try {
-                atualizarPrecoAuto(cotacao.getId());
+                Cotacao atualizado = atualizarPrecoAuto(cotacao.getId());
+                cotacaoRepository.getEntityManager().merge(atualizado);
             } catch (Exception e) {
                 // Log the error but continue with other quotations
                 System.err.println("Erro ao atualizar cotação " + cotacao.getId() + ": " + e.getMessage());
             }
         }
+        cotacaoRepository.flush();
         return cotacaoRepository.listAll();
     }
 }

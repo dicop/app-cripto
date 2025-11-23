@@ -79,7 +79,7 @@ async function listarCotacoes() {
     tbody.innerHTML = '';
     if (items.length === 0) {
       const tr = document.createElement('tr');
-      tr.innerHTML = '<td colspan="8" style="text-align: center;">Nenhuma cotação encontrada</td>';
+      tr.innerHTML = '<td colspan="9" style="text-align: center;">Nenhuma cotação encontrada</td>';
       tbody.appendChild(tr);
       return;
     }
@@ -93,6 +93,7 @@ async function listarCotacoes() {
         <td>${item.exchange ? item.exchange.nome : ''}</td>
         <td>${(item.precoVenda || 0).toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}</td>
         <td>${(item.precoCompra || 0).toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}</td>
+        <td>${formatDateTime(item.atualizadoEm)}</td>
         <td class="crypto-actions">
           <button class="btn-edit" onclick="editarCotacao(${item.id})" title="Editar"><i class="fas fa-edit"></i></button>
           <button class="btn-delete" onclick="excluirCotacao(${item.id})" title="Excluir"><i class="fas fa-trash"></i></button>
@@ -107,6 +108,23 @@ async function listarCotacoes() {
   } catch (e) {
     console.error(e);
     Swal.fire({ icon: 'error', title: 'Erro ao listar cotações' });
+  }
+}
+
+function formatDateTime(value) {
+  if (!value) return '';
+  try {
+    const d = new Date(value);
+    const pad = n => String(n).padStart(2, '0');
+    const day = pad(d.getDate());
+    const month = pad(d.getMonth() + 1);
+    const year = d.getFullYear();
+    const hours = pad(d.getHours());
+    const minutes = pad(d.getMinutes());
+    const seconds = pad(d.getSeconds());
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  } catch {
+    return String(value);
   }
 }
 

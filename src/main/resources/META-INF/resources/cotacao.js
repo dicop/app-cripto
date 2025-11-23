@@ -8,11 +8,11 @@ const btnAddCotacao = document.getElementById('btn-add-cotacao');
 const modalClose = document.querySelector('.modal-close');
 const btnClearForm = document.getElementById('btn-clear-form');
 
-document.addEventListener('DOMContentLoaded', () => {
-  listarCotacoes();
-  carregarCriptomoedas();
-  carregarExchanges();
+document.addEventListener('DOMContentLoaded', async () => {
   inicializarMenuResponsivo();
+  await carregarCriptomoedas();
+  await carregarExchanges();
+  listarCotacoes();
   inicializarEventos();
 });
 
@@ -59,6 +59,10 @@ function inicializarEventos() {
       modalCotacao.style.display = 'flex';
     });
   }
+  const btnAtualizarTodos = document.getElementById('btn-atualizar-todos');
+  if (btnAtualizarTodos) {
+    btnAtualizarTodos.addEventListener('click', atualizarTodos);
+  }
   if (modalClose) modalClose.addEventListener('click', fecharModal);
   if (btnClearForm) btnClearForm.addEventListener('click', limparFormulario);
   if (formCotacao) formCotacao.addEventListener('submit', salvarCotacao);
@@ -92,7 +96,9 @@ async function listarCotacoes() {
         <td class="crypto-actions">
           <button class="btn-edit" onclick="editarCotacao(${item.id})" title="Editar"><i class="fas fa-edit"></i></button>
           <button class="btn-delete" onclick="excluirCotacao(${item.id})" title="Excluir"><i class="fas fa-trash"></i></button>
-          <button class="btn-refresh" onclick="atualizarPreco(${item.id})" title="Atualizar Preço"><i class="fas fa-sync-alt"></i></button>
+          <button class="btn-refresh" onclick="atualizarPreco(${item.id})" title="Atualizar preço bybit"><i class="fas fa-sync-alt"></i></button>
+          <button class="btn-binance" onclick="atualizarPrecoBinance(${item.id})" title="Atualizar preço binance"><i class="fas fa-sync-alt"></i></button>
+          <button class="btn-auto-update" onclick="atualizarPrecoAuto(${item.id})" title="Atualizar Preço"><i class="fas fa-sync"></i></button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -234,6 +240,59 @@ async function atualizarPreco(id) {
       Swal.fire({ icon: 'success', title: 'Preço atualizado', timer: 1500, showConfirmButton: false });
     } else {
       const err = await resp.json(); // Tentar pegar msg de erro se houver
+      Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });
+    }
+  } catch (e) {
+    console.error(e);
+    Swal.fire({ icon: 'error', title: 'Erro de conexão' });
+  }
+}
+
+async function atualizarPrecoBinance(id) {
+  try {
+    Swal.fire({ title: 'Atualizando Binance...', didOpen: () => Swal.showLoading() });
+    const resp = await fetch(`${apiCotacoes}/${id}/atualizar-preco-binance`, { method: 'POST' });
+    if (resp.ok) {
+      await listarCotacoes();
+      Swal.fire({ icon: 'success', title: 'Preço atualizado (Binance)', timer: 1500, showConfirmButton: false });
+    } else {
+      const err = await resp.json();
+      Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });
+    }
+  } catch (e) {
+    console.error(e);
+    Swal.fire({ icon: 'error', title: 'Erro de conexão' });
+  }
+}
+
+async function atualizarPrecoAuto(id) {
+  try {
+    Swal.fire({ title: 'Atualizando...', didOpen: () => Swal.showLoading() });
+    const resp = await fetch(`${apiCotacoes}/${id}/atualizar-preco-auto`, { method: 'POST' });
+    if (resp.ok) {
+      const data = await resp.json();
+      await listarCotacoes();
+      const exchangeNome = data.exchange ? data.exchange.nome : 'Exchange desconhecida';
+      Swal.fire({ icon: 'success', title: `Preço atualizado (${exchangeNome})`, timer: 1500, showConfirmButton: false });
+    } else {
+      const err = await resp.json();
+      Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });
+    }
+  } catch (e) {
+    console.error(e);
+    Swal.fire({ icon: 'error', title: 'Erro de conexão' });
+  }
+}
+
+async function atualizarTodos() {
+  try {
+    Swal.fire({ title: 'Atualizando todas as cotações...', didOpen: () => Swal.showLoading() });
+    const resp = await fetch(`${apiCotacoes}/atualizar-todos`, { method: 'POST' });
+    if (resp.ok) {
+      await listarCotacoes();
+      Swal.fire({ icon: 'success', title: 'Todas as cotações foram atualizadas!', timer: 2000, showConfirmButton: false });
+    } else {
+      const err = await resp.json();
       Swal.fire({ icon: 'error', title: 'Erro ao atualizar', text: err.message || 'Verifique o console' });
     }
   } catch (e) {

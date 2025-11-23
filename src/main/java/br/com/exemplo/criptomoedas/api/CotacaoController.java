@@ -43,4 +43,22 @@ public class CotacaoController {
     public Cotacao atualizarPreco(@PathParam("id") Long id) {
         return servicoCotacao.atualizarPreco(id);
     }
+
+    @POST
+    @Path("/{id}/atualizar-preco-binance")
+    public Cotacao atualizarPrecoBinance(@PathParam("id") Long id) {
+        return servicoCotacao.atualizarPrecoBinance(id);
+    }
+
+    @POST
+    @Path("/{id}/atualizar-preco-auto")
+    public Cotacao atualizarPrecoAuto(@PathParam("id") Long id) {
+        return servicoCotacao.atualizarPrecoAuto(id);
+    }
+
+    @POST
+    @Path("/atualizar-todos")
+    public List<Cotacao> atualizarTodos() {
+        return servicoCotacao.atualizarTodos();
+    }
 }

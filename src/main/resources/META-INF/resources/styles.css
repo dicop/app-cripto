@@ -19,7 +19,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
 }
@@ -314,7 +315,7 @@ ul {
   border-collapse: collapse;
 }
 
-.recent-transactions th, 
+.recent-transactions th,
 .recent-transactions td {
   padding: 12px 15px;
   text-align: left;
@@ -404,7 +405,7 @@ ul {
   min-width: 0;
 }
 
-.crypto-table th, 
+.crypto-table th,
 .crypto-table td {
   padding: 15px;
   text-align: left;
@@ -431,7 +432,8 @@ ul {
   vertical-align: middle;
 }
 
-.btn-edit, .btn-delete {
+.btn-edit,
+.btn-delete {
   background: none;
   border: none;
   cursor: pointer;
@@ -447,9 +449,61 @@ ul {
   color: #ff5252;
 }
 
-.btn-edit:hover, .btn-delete:hover {
+.btn-edit:hover,
+.btn-delete:hover {
   opacity: 0.8;
 }
+
+/* Botões de atualização com cores distintas */
+.btn-refresh {
+  background-color: #9b59b6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.btn-refresh:hover {
+  background-color: #8e44ad;
+}
+
+.btn-binance {
+  background-color: #F0BB13;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn-binance:hover {
+  background-color: #d4a00f;
+  opacity: 0.9;
+}
+
+.btn-auto-update {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn-auto-update:hover {
+  background-color: #229954;
+  opacity: 0.9;
+}
+
 
 /* Modal */
 .modal {
@@ -524,7 +578,8 @@ ul {
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #fff;
-  appearance: none; /* remove estilos nativos em alguns navegadores */
+  appearance: none;
+  /* remove estilos nativos em alguns navegadores */
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -543,7 +598,8 @@ ul {
   text-align: right;
 }
 
-.btn-cancel, .btn-save {
+.btn-cancel,
+.btn-save {
   padding: 8px 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -625,11 +681,11 @@ ul {
   .dashboard-cards {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .dashboard-charts {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .config-display {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   }
@@ -640,20 +696,20 @@ ul {
   .dashboard-charts {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
-  
+
   .main-header {
     padding: 0 15px;
   }
-  
+
   .dashboard-content {
     padding: 15px;
   }
-  
+
   .config-display {
     grid-template-columns: 1fr;
     gap: 15px;
@@ -665,7 +721,7 @@ ul {
   :root {
     --sidebar-width: 280px;
   }
-  
+
   .sidebar {
     position: fixed;
     left: -280px;
@@ -675,20 +731,20 @@ ul {
     transition: left 0.3s ease;
     width: var(--sidebar-width);
   }
-  
+
   .sidebar.active {
     left: 0;
   }
-  
+
   .sidebar-overlay.active {
     display: block;
   }
-  
+
   .main-content {
     margin-left: 0;
     width: 100%;
   }
-  
+
   .main-header {
     padding: 0 10px;
   }
@@ -713,20 +769,20 @@ ul {
     height: 38px;
     padding: 8px 12px;
   }
-  
+
   .dashboard-cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  
+
   .card {
     padding: 15px;
   }
-  
+
   .card h3 {
     font-size: 0.9rem;
   }
-  
+
   .card .value {
     font-size: 1.3rem;
   }
@@ -738,7 +794,7 @@ ul {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  
+
   .main-header {
     flex-wrap: wrap;
     padding: 10px;
@@ -752,150 +808,153 @@ ul {
 
   .header-search input {
     height: 40px;
-    font-size: 16px; /* Previne zoom no iOS */
+    font-size: 16px;
+    /* Previne zoom no iOS */
   }
 
   .header-search button {
     height: 40px;
     padding: 10px 15px;
   }
-  
+
   .dashboard-content h1 {
     font-size: 1.5rem;
     margin-bottom: 15px;
   }
-  
+
   .card {
     padding: 12px;
   }
-  
+
   .card-icon {
     font-size: 1.5rem;
   }
-  
+
   .card .value {
     font-size: 1.2rem;
   }
-  
+
   .card .label {
     font-size: 0.8rem;
   }
-  
+
   /* Formulários responsivos */
   .form-container {
     padding: 15px;
     margin: 10px;
   }
-  
+
   .form-group {
     margin-bottom: 15px;
   }
-  
+
   .form-group input,
   .form-group select,
   .form-group textarea {
-    font-size: 16px; /* Previne zoom no iOS */
+    font-size: 16px;
+    /* Previne zoom no iOS */
   }
-  
+
   .btn {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
   }
-  
-  .btn + .btn {
+
+  .btn+.btn {
     margin-top: 10px;
     margin-left: 0;
   }
-  
+
   /* Conteúdo das páginas */
   .crypto-content {
     padding: 15px 10px;
   }
-  
+
   .crypto-header {
     flex-direction: column;
     gap: 15px;
     align-items: stretch;
     margin-bottom: 15px;
   }
-  
+
   .crypto-header h1 {
     font-size: 1.5rem;
     text-align: center;
   }
-  
+
   .btn-add {
     width: 100%;
     justify-content: center;
   }
-  
+
   /* Tabelas responsivas */
   .crypto-table {
     padding: 10px;
     margin-bottom: 15px;
   }
-  
+
   .crypto-table th,
   .crypto-table td {
     padding: 8px 5px;
     font-size: 0.85rem;
   }
-  
+
   .crypto-table th:first-child,
   .crypto-table td:first-child {
     padding-left: 10px;
   }
-  
+
   .crypto-table th:last-child,
   .crypto-table td:last-child {
     padding-right: 10px;
   }
-  
+
   /* Esconder colunas menos importantes em telas pequenas */
   .crypto-table th:first-child,
   .crypto-table td:first-child {
     display: none;
   }
-  
+
   /* Config cards para mobile */
   .config-display {
     grid-template-columns: 1fr;
     gap: 10px;
     margin-top: 15px;
   }
-  
+
   .config-card {
     padding: 15px;
   }
-  
+
   .config-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
   }
-  
+
   /* Modais em dispositivos móveis */
   .modal-content {
     width: 95%;
     margin: 10px;
   }
-  
+
   .modal-header {
     padding: 10px 15px;
   }
-  
+
   .modal-body {
     padding: 15px;
   }
-  
+
   .modal-footer {
     padding: 10px 15px;
     flex-direction: column;
     gap: 10px;
   }
-  
-  .btn-cancel, .btn-save {
+
+  .btn-cancel,
+  .btn-save {
     width: 100%;
     margin: 0;
   }
@@ -906,19 +965,19 @@ ul {
   .dashboard-content {
     padding: 10px;
   }
-  
+
   .main-header {
     padding: 8px;
   }
-  
+
   .card {
     padding: 10px;
   }
-  
+
   .sidebar {
     width: 260px;
   }
-  
+
   .sidebar.active {
     left: 0;
   }
@@ -929,16 +988,16 @@ ul {
   .sidebar {
     width: 200px;
   }
-  
+
   .sidebar-header {
     padding: 10px;
   }
-  
+
   .sidebar-nav ul li a {
     padding: 8px 15px;
     font-size: 0.9rem;
   }
-  
+
   .main-header {
     height: 50px;
   }
@@ -1207,29 +1266,29 @@ ul {
   .messages-content {
     padding: 20px 15px;
   }
-  
+
   .messages-header h1 {
     font-size: 1.5rem;
   }
-  
+
   .message-form-container {
     padding: 20px;
   }
-  
+
   .form-actions {
     flex-direction: column;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
   }
-  
+
   .info-card {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .info-icon {
     align-self: center;
   }

@@ -40,6 +40,10 @@ public class ServicoCotacao {
         cotacaoRepository.deleteById(id);
     }
 
+    @Inject
+    @RestClient
+    BinanceClient binanceClient;
+
     @Transactional
     public Cotacao atualizarPreco(Long id) {
         Cotacao cotacao = cotacaoRepository.findById(id);
@@ -61,6 +65,34 @@ public class ServicoCotacao {
 
         // Calcular venda (usando bids)
         double precoVenda = calcularPrecoMedio(quantidadeDolar, response.result.b);
+
+        cotacao.setPrecoCompra(precoCompra);
+        cotacao.setPrecoVenda(precoVenda);
+
+        return cotacao;
+    }
+
+    @Transactional
+    public Cotacao atualizarPrecoBinance(Long id) {
+        Cotacao cotacao = cotacaoRepository.findById(id);
+        if (cotacao == null) {
+            throw new IllegalArgumentException("Cotação não encontrada");
+        }
+
+        String symbol = cotacao.getNegociada().getSigla() + cotacao.getDolar().getSigla();
+        BinanceClient.BinanceResponse response = binanceClient.getOrderbook(symbol, 50);
+
+        if (response == null || response.bids == null || response.asks == null) {
+            throw new RuntimeException("Erro ao consultar Binance");
+        }
+
+        double quantidadeDolar = cotacao.getQuantidadeDolar();
+
+        // Calcular compra (usando asks)
+        double precoCompra = calcularPrecoMedio(quantidadeDolar, response.asks);
+
+        // Calcular venda (usando bids)
+        double precoVenda = calcularPrecoMedio(quantidadeDolar, response.bids);
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
@@ -131,5 +163,42 @@ public class ServicoCotacao {
         if (tokens == 0)
             return 0;
         return financeiro / tokens;
+    }
+
+    @Transactional
+    public Cotacao atualizarPrecoAuto(Long id) {
+        Cotacao cotacao = cotacaoRepository.findById(id);
+        if (cotacao == null) {
+            throw new IllegalArgumentException("Cotação não encontrada");
+        }
+
+        if (cotacao.getExchange() == null) {
+            throw new IllegalArgumentException("Cotação sem exchange definida");
+        }
+
+        String exchangeNome = cotacao.getExchange().getNome().toLowerCase();
+
+        if (exchangeNome.contains("bybit")) {
+            return atualizarPreco(id);
+        } else if (exchangeNome.contains("binance")) {
+            return atualizarPrecoBinance(id);
+        } else {
+            throw new RuntimeException(
+                    "Atualização automática não suportada para a exchange: " + cotacao.getExchange().getNome());
+        }
+    }
+
+    @Transactional
+    public List<Cotacao> atualizarTodos() {
+        List<Cotacao> cotacoes = cotacaoRepository.listAll();
+        for (Cotacao cotacao : cotacoes) {
+            try {
+                atualizarPrecoAuto(cotacao.getId());
+            } catch (Exception e) {
+                // Log the error but continue with other quotations
+                System.err.println("Erro ao atualizar cotação " + cotacao.getId() + ": " + e.getMessage());
+            }
+        }
+        return cotacaoRepository.listAll();
     }
 }

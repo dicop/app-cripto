@@ -37,6 +37,7 @@ public class CriptomoedaService {
             existente.setRede(dados.getRede());
             existente.setExchange(dados.getExchange());
             existente.setContrato(dados.getContrato());
+            existente.setQuantidadeCasasDecimais(dados.getQuantidadeCasasDecimais());
         }
     }
 

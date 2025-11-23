@@ -26,7 +26,7 @@ function inicializarMenuResponsivo() {
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const sidebarOverlay = document.getElementById('sidebarOverlay');
-  
+
   if (menuToggle && sidebar && sidebarOverlay) {
     // Toggle do menu
     menuToggle.addEventListener('click', () => {
@@ -34,14 +34,14 @@ function inicializarMenuResponsivo() {
       sidebarOverlay.classList.toggle('active');
       document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
     });
-    
+
     // Fechar menu ao clicar no overlay
     sidebarOverlay.addEventListener('click', () => {
       sidebar.classList.remove('active');
       sidebarOverlay.classList.remove('active');
       document.body.style.overflow = '';
     });
-    
+
     // Fechar menu ao clicar em um link (para navegação mobile)
     const sidebarLinks = sidebar.querySelectorAll('a');
     sidebarLinks.forEach(link => {
@@ -53,7 +53,7 @@ function inicializarMenuResponsivo() {
         }
       });
     });
-    
+
     // Fechar menu ao redimensionar para desktop
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768) {
@@ -80,14 +80,14 @@ async function listarCriptomoedas() {
 function montarTabelaCriptomoedas(items) {
   const tbody = tabelaCriptomoedas.querySelector('tbody');
   tbody.innerHTML = '';
-  
+
   if (items.length === 0) {
     const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="6" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
+    tr.innerHTML = '<td colspan="7" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
     tbody.appendChild(tr);
     return;
   }
-  
+
   items.forEach(item => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -96,6 +96,7 @@ function montarTabelaCriptomoedas(items) {
       <td>${item.sigla || ''}</td>
       <td>${item.rede && item.rede.nome ? item.rede.nome : ''}</td>
       <td>${item.contrato || ''}</td>
+      <td>${item.quantidadeCasasDecimais || ''}</td>
       <td class="crypto-actions">
         <button class="btn-edit" onclick="editarCriptomoeda(${item.id})"><i class="fas fa-edit"></i></button>
         <button class="btn-delete" onclick="excluirCriptomoeda(${item.id})"><i class="fas fa-trash"></i></button>
@@ -133,7 +134,7 @@ function limparFormulario() {
 }
 
 // Editar criptomoeda
-window.editarCriptomoeda = async function(id) {
+window.editarCriptomoeda = async function (id) {
   try {
     const response = await fetch(`${api}/${id}`);
     if (!response.ok) {
@@ -145,19 +146,20 @@ window.editarCriptomoeda = async function(id) {
       });
       return;
     }
-    
+
     const data = await response.json();
     document.getElementById('id').value = data.id || '';
     document.getElementById('nome').value = data.nome || '';
     document.getElementById('sigla').value = data.sigla || '';
     document.getElementById('contrato').value = data.contrato || '';
+    document.getElementById('casasDecimais').value = data.quantidadeCasasDecimais || '';
     if (data.rede && data.rede.id) {
       selectRede.value = String(data.rede.id);
     }
     if (data.exchange && data.exchange.id && selectExchange) {
       selectExchange.value = String(data.exchange.id);
     }
-    
+
     document.querySelector('.modal-header h2').textContent = 'Editar Criptomoeda';
     modalCriptomoeda.style.display = 'flex';
   } catch (error) {
@@ -166,7 +168,7 @@ window.editarCriptomoeda = async function(id) {
 };
 
 // Excluir criptomoeda
-window.excluirCriptomoeda = async function(id) {
+window.excluirCriptomoeda = async function (id) {
   const result = await Swal.fire({
     title: 'Confirmação',
     text: 'Tem certeza que deseja excluir esta criptomoeda?',
@@ -177,9 +179,9 @@ window.excluirCriptomoeda = async function(id) {
     confirmButtonText: 'Sim, excluir!',
     cancelButtonText: 'Cancelar'
   });
-  
+
   if (!result.isConfirmed) return;
-  
+
   try {
     const response = await fetch(`${api}/${id}`, { method: 'DELETE' });
     if (response.status === 204) {
@@ -206,29 +208,30 @@ window.excluirCriptomoeda = async function(id) {
 // Salvar criptomoeda (criar ou atualizar)
 formCriptomoeda.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
+
   const id = document.getElementById('id').value;
   const payload = {
     nome: document.getElementById('nome').value,
     sigla: document.getElementById('sigla').value,
     contrato: document.getElementById('contrato').value,
+    quantidadeCasasDecimais: document.getElementById('casasDecimais').value ? parseInt(document.getElementById('casasDecimais').value) : null,
     rede: { id: parseInt(selectRede.value) }
   };
   const exchangeId = selectExchange && selectExchange.value ? parseInt(selectExchange.value) : null;
   if (exchangeId) {
     payload.exchange = { id: exchangeId };
   }
-  
+
   try {
     let url = api;
     let method = 'POST';
-    
+
     if (id) {
       url = `${api}/${id}`;
       method = 'PUT';
       payload.id = parseInt(id);
     }
-    
+
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -236,7 +239,7 @@ formCriptomoeda.addEventListener('submit', async (e) => {
       },
       body: JSON.stringify(payload)
     });
-    
+
     if (response.ok) {
       Swal.fire({
         icon: 'success',

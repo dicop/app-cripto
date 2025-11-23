@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <title>Mensagens - Gerenciador de Criptomoedas</title>
@@ -9,11 +10,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
   <div class="app-container">
     <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
+
     <!-- Sidebar / Menu -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
@@ -28,6 +30,8 @@
           <li><a href="cotacao.html"><i class="fas fa-tag"></i> Cotação de Preço</a></li>
           <li><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
           <li class="active"><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
+          <li><a href="robos.html"><i class="fas fa-robot"></i> Robôs</a></li>
+          <li><a href="jupiter.html"><i class="fas fa-bolt"></i> Jupiter</a></li>
           <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
         </ul>
       </nav>
@@ -60,13 +64,8 @@
               <label for="messageText">
                 <i class="fas fa-comment-alt"></i> Mensagem
               </label>
-              <textarea 
-                id="messageText" 
-                name="messageText" 
-                placeholder="Digite sua mensagem aqui..."
-                rows="8"
-                required
-              ></textarea>
+              <textarea id="messageText" name="messageText" placeholder="Digite sua mensagem aqui..." rows="8"
+                required></textarea>
               <div class="char-counter">
                 <span id="charCount">0</span> / 4096 caracteres
               </div>
@@ -106,4 +105,5 @@
   <script src="app.js"></script>
   <script src="mensagens.js"></script>
 </body>
+
 </html>

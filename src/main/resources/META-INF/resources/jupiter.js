@@ -100,17 +100,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const outAmount = data.outAmount;
         const priceImpact = data.priceImpactPct;
 
-        // Get symbol for output
+        // Get symbol and decimals for output
         const outCrypto = cryptoMap[outputMintAddress];
         const outSymbol = outCrypto ? outCrypto.sigla : '';
+        const outDecimals = outCrypto ? outCrypto.quantidadeCasasDecimais : 0;
 
-        document.getElementById('resultInAmount').textContent = inAmount;
-        document.getElementById('resultOutAmount').textContent = `${outAmount} ${outSymbol}`;
+        // Get symbol and decimals for input
+        const inputMintAddress = document.getElementById('inputMint').value;
+        const inCrypto = cryptoMap[inputMintAddress];
+        const inDecimals = inCrypto ? inCrypto.quantidadeCasasDecimais : 0;
+
+        // Calculate adjusted amounts
+        const adjustedOutAmount = outDecimals > 0 ? parseFloat(outAmount) / Math.pow(10, outDecimals) : parseFloat(outAmount);
+        const adjustedInAmount = inDecimals > 0 ? parseFloat(inAmount) / Math.pow(10, inDecimals) : parseFloat(inAmount);
+
+        document.getElementById('resultInAmount').textContent = adjustedInAmount;
+        document.getElementById('resultOutAmount').textContent = `${adjustedOutAmount} ${outSymbol}`;
         document.getElementById('resultPriceImpact').textContent = priceImpact ? `${parseFloat(priceImpact).toFixed(4)}%` : 'N/A';
 
         // Calculate simple price if possible
-        if (inAmount && outAmount) {
-            const price = parseFloat(outAmount) / parseFloat(inAmount);
+        if (adjustedInAmount && adjustedOutAmount) {
+            const price = adjustedOutAmount / adjustedInAmount;
             document.getElementById('resultPrice').textContent = `1 ≈ ${price.toFixed(6)} ${outSymbol}`;
         }
     }

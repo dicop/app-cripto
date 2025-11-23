@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <title>Criptomoedas - Gerenciador de Criptomoedas</title>
@@ -9,11 +10,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
   <div class="app-container">
     <!-- Overlay para mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
+
     <!-- Sidebar / Menu -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
@@ -28,6 +30,8 @@
           <li><a href="cotacao.html"><i class="fas fa-tag"></i> Cotação de Preço</a></li>
           <li><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
           <li><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
+          <li><a href="robos.html"><i class="fas fa-robot"></i> Robôs</a></li>
+          <li><a href="jupiter.html"><i class="fas fa-bolt"></i> Jupiter</a></li>
           <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
         </ul>
       </nav>
@@ -53,7 +57,7 @@
           <h1>Criptomoedas</h1>
           <button class="btn-add" id="btn-add-crypto"><i class="fas fa-plus"></i> Nova Criptomoeda</button>
         </div>
-        
+
         <div class="crypto-table">
           <table id="tabela-criptomoedas">
             <thead>
@@ -63,6 +67,7 @@
                 <th>Sigla</th>
                 <th>Rede</th>
                 <th>Contrato</th>
+                <th>Casas Decimais</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -103,7 +108,12 @@
           </div>
           <div class="form-group">
             <label for="contrato">Contrato</label>
-            <input id="contrato" required maxlength="100" pattern="^[A-Za-z0-9]+$" title="Apenas caracteres alfanuméricos" placeholder="Ex.: 0x... (alfanumérico)">
+            <input id="contrato" required maxlength="100" pattern="^[A-Za-z0-9]+$"
+              title="Apenas caracteres alfanuméricos" placeholder="Ex.: 0x... (alfanumérico)">
+          </div>
+          <div class="form-group">
+            <label for="casasDecimais">Quantidade de casas decimais</label>
+            <input type="number" id="casasDecimais" min="0" max="18" required placeholder="Ex.: 18">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-cancel" id="btn-cancel">Cancelar</button>
@@ -116,4 +126,5 @@
 
   <script src="criptomoedas.js"></script>
 </body>
+
 </html>

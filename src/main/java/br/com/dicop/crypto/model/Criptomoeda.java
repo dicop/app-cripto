@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-
 @Entity
 public class Criptomoeda {
 
@@ -29,6 +28,9 @@ public class Criptomoeda {
     @NotBlank
     @Column(name = "contrato", length = 100)
     private String contrato;
+
+    @Column(name = "quantidade_casas_decimais")
+    private Integer quantidadeCasasDecimais;
 
     public Long getId() {
         return id;
@@ -84,5 +86,13 @@ public class Criptomoeda {
 
     public void setContrato(String contrato) {
         this.contrato = contrato;
+    }
+
+    public Integer getQuantidadeCasasDecimais() {
+        return quantidadeCasasDecimais;
+    }
+
+    public void setQuantidadeCasasDecimais(Integer quantidadeCasasDecimais) {
+        this.quantidadeCasasDecimais = quantidadeCasasDecimais;
     }
 }

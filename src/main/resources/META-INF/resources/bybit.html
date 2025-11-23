@@ -22,6 +22,7 @@
           <li><a href="criptomoedas.html"><i class="fas fa-coins"></i> Criptomoedas</a></li>
           <li><a href="redes.html"><i class="fas fa-network-wired"></i> Redes</a></li>
           <li><a href="exchanges.html"><i class="fas fa-exchange-alt"></i> Exchanges</a></li>
+          <li><a href="cotacao.html"><i class="fas fa-tag"></i> Cotação de Preço</a></li>
           <li class="active"><a href="bybit.html"><i class="fas fa-store"></i> Bybit</a></li>
           <li><a href="mensagens.html"><i class="fas fa-paper-plane"></i> Mensagens</a></li>
           <li><a href="configuracao.html"><i class="fas fa-cog"></i> Configurações</a></li>
@@ -45,14 +46,22 @@
 
       <div class="crypto-content">
         <div class="crypto-header">
-          <h1>Bybit - Livro de Ofertas CRCLX/USDT</h1>
+          <h1 id="page-title">Bybit - Livro de Ofertas</h1>
           <button class="btn-add" id="btn-refresh"><i class="fas fa-rotate"></i> Atualizar</button>
         </div>
 
         <div class="config-form-container">
           <form id="bybit-evaluator" class="form-padrao" onsubmit="return false;">
             <div class="form-group">
-              <label for="usdtAmount">Quantidade de USDT</label>
+              <label for="baseSymbol">Cripto base</label>
+              <input id="baseSymbol" type="text" placeholder="Ex.: CRCLX">
+            </div>
+            <div class="form-group">
+              <label for="quoteSymbol">Cripto cotação</label>
+              <input id="quoteSymbol" type="text" placeholder="Ex.: USDT">
+            </div>
+            <div class="form-group">
+              <label for="usdtAmount">Quantidade de cotação</label>
               <input id="usdtAmount" type="number" step="0.01" min="0" placeholder="Ex.: 100.00">
             </div>
             <div class="form-group">

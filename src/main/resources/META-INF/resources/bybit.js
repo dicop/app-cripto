@@ -3,6 +3,12 @@ let orderbookBids = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   inicializarMenuResponsivo();
+  const baseEl = document.getElementById('baseSymbol');
+  const quoteEl = document.getElementById('quoteSymbol');
+  if (baseEl && !baseEl.value) baseEl.value = 'CRCLX';
+  if (quoteEl && !quoteEl.value) quoteEl.value = 'USDT';
+  if (baseEl) baseEl.addEventListener('change', carregarOrderbook);
+  if (quoteEl) quoteEl.addEventListener('change', carregarOrderbook);
   carregarOrderbook();
   const btn = document.getElementById('btn-refresh');
   if (btn) btn.addEventListener('click', carregarOrderbook);
@@ -45,8 +51,17 @@ function inicializarMenuResponsivo() {
   }
 }
 
+function obterSimbolos() {
+  const baseEl = document.getElementById('baseSymbol');
+  const quoteEl = document.getElementById('quoteSymbol');
+  const base = (baseEl && baseEl.value ? baseEl.value : 'CRCLX').trim().toUpperCase();
+  const quote = (quoteEl && quoteEl.value ? quoteEl.value : 'USDT').trim().toUpperCase();
+  return { base, quote, symbol: base + quote };
+}
+
 async function carregarOrderbook() {
-  const url = 'https://api.bybit.com/v5/market/orderbook?category=spot&symbol=CRCLXUSDT&limit=50';
+  const { base, quote, symbol } = obterSimbolos();
+  const url = `https://api.bybit.com/v5/market/orderbook?category=spot&symbol=${symbol}&limit=50`;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Falha ao consultar a API da Bybit');
@@ -61,7 +76,13 @@ async function carregarOrderbook() {
     const ts = data.result.ts || Date.now();
     const dt = new Date(ts);
     const el = document.getElementById('last-update');
-    if (el) el.innerHTML = `<p>Atualizado em: ${dt.toLocaleString()}</p>`;
+    if (el) el.innerHTML = `<p>Par: ${base}/${quote} — Atualizado em: ${dt.toLocaleString()}</p>`;
+    const title = document.getElementById('page-title');
+    if (title) title.textContent = `Bybit - Livro de Ofertas ${base}/${quote}`;
+    const priceHeaders = document.querySelectorAll('#tabela-asks thead th:first-child, #tabela-bids thead th:first-child');
+    priceHeaders.forEach(th => th.textContent = `Preço (${quote})`);
+    const totalHeaders = document.querySelectorAll('#tabela-asks thead th:nth-child(3), #tabela-bids thead th:nth-child(3)');
+    totalHeaders.forEach(th => th.textContent = `Valor Total (${quote})`);
   } catch (e) {
     Swal.fire({
       icon: 'error',
@@ -100,10 +121,11 @@ function formatarNumero(n) {
 }
 
 function avaliarPreco() {
+  const { base, quote } = obterSimbolos();
   const input = document.getElementById('usdtAmount');
   const val = input ? parseFloat(input.value) : NaN;
   if (!isFinite(val) || val <= 0) {
-    Swal.fire({ icon: 'warning', title: 'Valor inválido', text: 'Informe a quantidade de USDT', confirmButtonColor: '#3085d6' });
+    Swal.fire({ icon: 'warning', title: 'Valor inválido', text: `Informe a quantidade de ${quote}`, confirmButtonColor: '#3085d6' });
     return;
   }
   const compra = calcularCompraPorUSDT(val, orderbookAsks);
@@ -111,11 +133,11 @@ function avaliarPreco() {
   const el = document.getElementById('evaluation-result');
   if (el) {
     const ct = compra.liquidezSuficiente
-      ? `Compra: ${formatarNumero(compra.tokens)} CRCLX a preço médio ${formatarNumero(compra.precoMedio)} USDT`
-      : `Compra: liquidez insuficiente, disponível ${formatarNumero(compra.tokens)} CRCLX a preço médio ${formatarNumero(compra.precoMedio)} USDT`;
+      ? `Compra: ${formatarNumero(compra.tokens)} ${base} a preço médio ${formatarNumero(compra.precoMedio)} ${quote}`
+      : `Compra: liquidez insuficiente, disponível ${formatarNumero(compra.tokens)} ${base} a preço médio ${formatarNumero(compra.precoMedio)} ${quote}`;
     const vt = venda.liquidezSuficiente
-      ? `Venda: vender ${formatarNumero(venda.tokens)} CRCLX a preço médio ${formatarNumero(venda.precoMedio)} USDT`
-      : `Venda: liquidez insuficiente, seria necessário vender ${formatarNumero(venda.tokens)} CRCLX (preço médio ${formatarNumero(venda.precoMedio)} USDT)`;
+      ? `Venda: vender ${formatarNumero(venda.tokens)} ${base} a preço médio ${formatarNumero(venda.precoMedio)} ${quote}`
+      : `Venda: liquidez insuficiente, seria necessário vender ${formatarNumero(venda.tokens)} ${base} (preço médio ${formatarNumero(venda.precoMedio)} ${quote})`;
     el.innerHTML = `<p>${ct}</p><p>${vt}</p>`;
   }
 }

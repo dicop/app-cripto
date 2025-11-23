@@ -44,6 +44,10 @@ public class ServicoCotacao {
     @RestClient
     BinanceClient binanceClient;
 
+    @Inject
+    @RestClient
+    BitgetClient bitgetClient;
+
     @Transactional
     public Cotacao atualizarPreco(Long id) {
         Cotacao cotacao = cotacaoRepository.findById(id);
@@ -68,6 +72,9 @@ public class ServicoCotacao {
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
 
         return cotacao;
     }
@@ -96,6 +103,37 @@ public class ServicoCotacao {
 
         cotacao.setPrecoCompra(precoCompra);
         cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
+
+        return cotacao;
+    }
+
+    @Transactional
+    public Cotacao atualizarPrecoBitget(Long id) {
+        Cotacao cotacao = cotacaoRepository.findById(id);
+        if (cotacao == null) {
+            throw new IllegalArgumentException("Cotação não encontrada");
+        }
+
+        String symbol = cotacao.getNegociada().getSigla() + cotacao.getDolar().getSigla();
+        BitgetClient.BitgetResponse response = bitgetClient.getOrderbook(symbol, "step0", 50);
+
+        if (response == null || response.data == null || response.data.bids == null || response.data.asks == null) {
+            throw new RuntimeException("Erro ao consultar Bitget");
+        }
+
+        double quantidadeDolar = cotacao.getQuantidadeDolar();
+
+        double precoCompra = calcularPrecoMedio(quantidadeDolar, response.data.asks);
+        double precoVenda = calcularPrecoMedio(quantidadeDolar, response.data.bids);
+
+        cotacao.setPrecoCompra(precoCompra);
+        cotacao.setPrecoVenda(precoVenda);
+        cotacao.setAtualizadoEm(LocalDateTime.now());
+        cotacaoRepository.getEntityManager().merge(cotacao);
+        cotacaoRepository.flush();
 
         return cotacao;
     }
@@ -193,12 +231,14 @@ public class ServicoCotacao {
         List<Cotacao> cotacoes = cotacaoRepository.listAll();
         for (Cotacao cotacao : cotacoes) {
             try {
-                atualizarPrecoAuto(cotacao.getId());
+                Cotacao atualizado = atualizarPrecoAuto(cotacao.getId());
+                cotacaoRepository.getEntityManager().merge(atualizado);
             } catch (Exception e) {
                 // Log the error but continue with other quotations
                 System.err.println("Erro ao atualizar cotação " + cotacao.getId() + ": " + e.getMessage());
             }
         }
+        cotacaoRepository.flush();
         return cotacaoRepository.listAll();
     }
 }

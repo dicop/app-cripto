@@ -51,6 +51,12 @@ public class CotacaoController {
     }
 
     @POST
+    @Path("/{id}/atualizar-preco-bitget")
+    public Cotacao atualizarPrecoBitget(@PathParam("id") Long id) {
+        return servicoCotacao.atualizarPrecoBitget(id);
+    }
+
+    @POST
     @Path("/atualizar-todos")
     public List<Cotacao> atualizarTodos() {
         return servicoCotacao.atualizarTodos();

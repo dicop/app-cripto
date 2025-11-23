@@ -27,6 +27,7 @@ public class Cotacao {
     private Double precoVenda;
     private Double precoCompra;
     private LocalDateTime criadoEm;
+    private LocalDateTime atualizadoEm;
 
     public Long getId() {
         return id;
@@ -90,5 +91,13 @@ public class Cotacao {
 
     public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
+    }
+
+    public LocalDateTime getAtualizadoEm() {
+        return atualizadoEm;
+    }
+
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
+        this.atualizadoEm = atualizadoEm;
     }
 }

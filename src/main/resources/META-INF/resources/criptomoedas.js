@@ -83,7 +83,7 @@ function montarTabelaCriptomoedas(items) {
   
   if (items.length === 0) {
     const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="7" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
+    tr.innerHTML = '<td colspan="6" style="text-align: center;">Nenhuma criptomoeda encontrada</td>';
     tbody.appendChild(tr);
     return;
   }
@@ -94,7 +94,6 @@ function montarTabelaCriptomoedas(items) {
       <td>${item.id || ''}</td>
       <td>${item.nome || ''}</td>
       <td>${item.sigla || ''}</td>
-      <td>$${item.valor ? item.valor.toLocaleString('pt-BR', {minimumFractionDigits: 4, maximumFractionDigits: 4}) : ''}</td>
       <td>${item.rede && item.rede.nome ? item.rede.nome : ''}</td>
       <td>${item.contrato || ''}</td>
       <td class="crypto-actions">
@@ -151,7 +150,6 @@ window.editarCriptomoeda = async function(id) {
     document.getElementById('id').value = data.id || '';
     document.getElementById('nome').value = data.nome || '';
     document.getElementById('sigla').value = data.sigla || '';
-    document.getElementById('valor').value = data.valor || '';
     document.getElementById('contrato').value = data.contrato || '';
     if (data.rede && data.rede.id) {
       selectRede.value = String(data.rede.id);
@@ -213,7 +211,6 @@ formCriptomoeda.addEventListener('submit', async (e) => {
   const payload = {
     nome: document.getElementById('nome').value,
     sigla: document.getElementById('sigla').value,
-    valor: parseFloat(document.getElementById('valor').value),
     contrato: document.getElementById('contrato').value,
     rede: { id: parseInt(selectRede.value) }
   };

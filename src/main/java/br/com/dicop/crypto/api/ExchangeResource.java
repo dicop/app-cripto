@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.api;
 
 import br.com.dicop.crypto.model.Exchange;
-import br.com.dicop.crypto.service.ServicoExchange;
+import br.com.dicop.crypto.service.ExchangeService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ExchangeResource {
 
     @Inject
-    ServicoExchange servico;
+    ExchangeService servico;
 
     @GET
     public List<Exchange> listar() { return servico.listar(); }

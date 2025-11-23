@@ -1,6 +1,6 @@
 package br.com.dicop.crypto.api;
 
-import br.com.dicop.crypto.service.TelegramServico;
+import br.com.dicop.crypto.service.TelegramService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class TelegramResource {
     
     @Inject
-    TelegramServico telegramServico;
+    TelegramService telegramService;
     
     @POST
     @Path("/enviar-mensagem")
@@ -31,7 +31,7 @@ public class TelegramResource {
                         .build();
             }
             
-            boolean sucesso = telegramServico.enviarMensagem(mensagem);
+            boolean sucesso = telegramService.enviarMensagem(mensagem);
             
             if (sucesso) {
                 return Response.ok(Map.of("sucesso", true, "mensagem", "Mensagem enviada com sucesso!")).build();

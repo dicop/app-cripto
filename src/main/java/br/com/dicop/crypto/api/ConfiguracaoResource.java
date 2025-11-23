@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.api;
 
 import br.com.dicop.crypto.model.Configuracao;
-import br.com.dicop.crypto.service.ServicoConfiguracao;
+import br.com.dicop.crypto.service.ConfiguracaoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 public class ConfiguracaoResource {
     
     @Inject
-    ServicoConfiguracao servico;
+    ConfiguracaoService servico;
     
     @GET
     public Response obterConfiguracao() {

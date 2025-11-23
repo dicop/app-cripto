@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.api;
 
 import br.com.dicop.crypto.model.Rede;
-import br.com.dicop.crypto.service.ServicoRede;
+import br.com.dicop.crypto.service.RedeService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 public class RedeResource {
 
     @Inject
-    ServicoRede servico;
+    RedeService servico;
 
     @GET
     public List<Rede> listar() {

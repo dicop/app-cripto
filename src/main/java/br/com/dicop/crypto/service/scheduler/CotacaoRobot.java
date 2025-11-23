@@ -1,6 +1,6 @@
 package br.com.dicop.crypto.service.scheduler;
 
-import br.com.dicop.crypto.service.ServicoCotacao;
+import br.com.dicop.crypto.service.CotacaoService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 public class CotacaoRobot implements Robot {
 
     @Inject
-    ServicoCotacao servicoCotacao;
+    CotacaoService cotacaoService;
 
     @Override
     public void execute() {
         System.out.println("[CotacaoRobot] Iniciando: " + LocalDateTime.now());
-        servicoCotacao.atualizarTodos();
+        cotacaoService.atualizarTodos();
         System.out.println("[CotacaoRobot] Finalizando: " + LocalDateTime.now());
     }
 

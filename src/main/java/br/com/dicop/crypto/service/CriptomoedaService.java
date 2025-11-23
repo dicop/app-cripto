@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.service;
 
 import br.com.dicop.crypto.model.Criptomoeda;
-import br.com.dicop.crypto.repository.RepositorioCriptomoeda;
+import br.com.dicop.crypto.repository.CriptomoedaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,10 +9,10 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class ServicoCriptomoeda {
+public class CriptomoedaService {
 
     @Inject
-    RepositorioCriptomoeda repositorio;
+    CriptomoedaRepository repositorio;
 
     public List<Criptomoeda> listar() {
         return repositorio.listAll();

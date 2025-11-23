@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.service;
 
 import br.com.dicop.crypto.model.Exchange;
-import br.com.dicop.crypto.repository.RepositorioExchange;
+import br.com.dicop.crypto.repository.ExchangeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,10 +9,10 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class ServicoExchange {
+public class ExchangeService {
 
     @Inject
-    RepositorioExchange repositorio;
+    ExchangeRepository repositorio;
 
     public List<Exchange> listar() { return repositorio.listAll(); }
     public Exchange buscarPorId(Long id) { return repositorio.findById(id); }

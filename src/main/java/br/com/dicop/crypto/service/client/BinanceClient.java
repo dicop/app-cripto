@@ -1,4 +1,4 @@
-package br.com.dicop.crypto.service;
+package br.com.dicop.crypto.service.client;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

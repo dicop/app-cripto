@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.service.scheduler;
 
 import br.com.dicop.crypto.model.Configuracao;
-import br.com.dicop.crypto.service.ServicoConfiguracao;
+import br.com.dicop.crypto.service.ConfiguracaoService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.runtime.StartupEvent;
@@ -23,7 +23,7 @@ public class RobotManager {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
     @Inject
-    ServicoConfiguracao servicoConfiguracao;
+    ConfiguracaoService configuracaoService;
 
     @Inject
     ObjectMapper objectMapper;
@@ -43,7 +43,7 @@ public class RobotManager {
 
     private void loadFrequencies() {
         try {
-            Configuracao config = servicoConfiguracao.obterConfiguracao();
+            Configuracao config = configuracaoService.obterConfiguracao();
             if (config != null && config.getFrequenciaRobos() != null) {
                 Map<String, Long> savedFrequencies = objectMapper.readValue(
                         config.getFrequenciaRobos(),
@@ -59,13 +59,13 @@ public class RobotManager {
 
     private void saveFrequencies() {
         try {
-            Configuracao config = servicoConfiguracao.obterConfiguracao();
+            Configuracao config = configuracaoService.obterConfiguracao();
             if (config == null) {
                 config = new Configuracao();
             }
             String json = objectMapper.writeValueAsString(robotFrequencies);
             config.setFrequenciaRobos(json);
-            servicoConfiguracao.salvarConfiguracao(config);
+            configuracaoService.salvarConfiguracao(config);
             System.out.println("Saved robot frequencies: " + json);
         } catch (Exception e) {
             System.err.println("Error saving robot frequencies: " + e.getMessage());

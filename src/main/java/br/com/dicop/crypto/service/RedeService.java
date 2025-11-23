@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.service;
 
 import br.com.dicop.crypto.model.Rede;
-import br.com.dicop.crypto.repository.RepositorioRede;
+import br.com.dicop.crypto.repository.RedeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,10 +9,10 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class ServicoRede {
+public class RedeService {
 
     @Inject
-    RepositorioRede repositorio;
+    RedeRepository repositorio;
 
     public List<Rede> listar() {
         return repositorio.listAll();

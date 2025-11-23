@@ -1,7 +1,7 @@
 package br.com.dicop.crypto.api;
 
 import br.com.dicop.crypto.model.Criptomoeda;
-import br.com.dicop.crypto.service.ServicoCriptomoeda;
+import br.com.dicop.crypto.service.CriptomoedaService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CriptomoedaResource {
 
     @Inject
-    ServicoCriptomoeda servico;
+    CriptomoedaService servico;
 
     @GET
     public List<Criptomoeda> listar() {

@@ -2,6 +2,9 @@ package br.com.dicop.crypto.service;
 
 import br.com.dicop.crypto.model.Cotacao;
 import br.com.dicop.crypto.repository.CotacaoRepository;
+import br.com.dicop.crypto.service.client.BinanceClient;
+import br.com.dicop.crypto.service.client.BitgetClient;
+import br.com.dicop.crypto.service.client.BybitClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -11,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
-public class ServicoCotacao {
+public class CotacaoService {
 
     @Inject
     CotacaoRepository cotacaoRepository;

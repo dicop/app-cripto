@@ -14,14 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
-public class TelegramServico {
+public class TelegramService {
 
     @Inject
-    ServicoConfiguracao servicoConfiguracao;
+    ConfiguracaoService configuracaoService;
 
     public boolean enviarMensagem(String mensagem) {
         try {
-            Configuracao config = servicoConfiguracao.obterConfiguracao();
+            Configuracao config = configuracaoService.obterConfiguracao();
 
             // Valida configuração do Telegram
             if (config == null || config.getTokenChatTelegram() == null || config.getIdChatTelegram() == null) {
